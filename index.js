@@ -1,17 +1,27 @@
 require('dotenv').config();
 const express = require("express");
 const cors = require("cors");
-const cookieParser = require("cookie-parser");
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 
 const app = express();
 const port = process.env.PORT || 5000;
 
-// Middleware
-app.use(cors({ origin: ["http://localhost:5173" ,"https://styleferibd.vercel.app/"], credentials: true }));
+const cookieParser = require("cookie-parser");
+
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5173",
+      "https://styleferibd.vercel.app"
+    ],
+    credentials: true
+  })
+);
+
+app.options("*", cors());
+
 app.use(express.json());
 app.use(cookieParser());
-
 // MongoDB setup
 const uri = "mongodb+srv://amirhossainbc75:FawNlCNrdHtAseoZ@cluster0.ps5uh.mongodb.net/?appName=Cluster0";
 const client = new MongoClient(uri, {
